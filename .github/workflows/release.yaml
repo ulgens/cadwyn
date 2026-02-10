@@ -17,6 +17,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-python-uv
+      - uses: astral-sh/setup-uv@v7
       - run: uv build
       - run: uv publish

@@ -40,7 +40,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-python-uv
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
       - run: tox run -e py
@@ -111,11 +111,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-python-uv
+      - uses: astral-sh/setup-uv@v7
         with:
           # When this version is updated,
           # update the pyright `base_python` version in `tox.ini`, too.
           python-version: "3.12"
+      - run: |
+          uv sync --frozen --all-extras --dev
+          uv pip install --system tox tox-uv
       - run: tox run -e docs
       - name: Validate links
         uses: umbrelladocs/action-linkspector@v1
@@ -128,7 +131,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-python-uv
+      - uses: astral-sh/setup-uv@v7
         with:
           # When this version is updated,
           # update the pyright `base_python` version in `tox.ini`, too.
